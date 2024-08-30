@@ -10,7 +10,7 @@ export const http = axios.create({
 http.interceptors.request.use((req) => {
   req.headers = {
     ...req.headers,
-    Authorization: getCookie("accessToken"),
+    Authorization: `Bearer ${getCookie("accessToken")}`,
     TokenCybersoft: TOKEN_CYBERSOFT,
   };
   return req;
@@ -21,6 +21,6 @@ http.interceptors.response.use(
     return res;
   },
   async (err) => {
-    return Promise.reject(err);
+    return err.response;
   }
 );
